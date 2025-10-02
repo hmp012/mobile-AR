@@ -12,9 +12,110 @@
 /[Uu]ser[Ss]ettings/
 *.log
 
+# Large Unity-generated files and caches
+/[Aa]ssets/[Ss]treamingAssets/
+/[Aa]ssets/StreamingAssets/
+*.cache
+*.tmp
+*.dwlt
+*.layout
+*.meta~
+
+# Package Manager and Unity packages cache
+/[Pp]ackages/
+/[Ll]ibrary/PackageCache/
+/[Ll]ibrary/Artifacts/
+/[Ll]ibrary/ArtifactDB*
+/[Ll]ibrary/SourceAssetDB*
+/[Ll]ibrary/ScriptAssemblies/
+/[Ll]ibrary/ShaderCache/
+/[Ll]ibrary/metadata/
+/[Ll]ibrary/AssetImportState
+/[Ll]ibrary/AssetServerCacheV3
+/[Ll]ibrary/BuildPlayer.prefs
+/[Ll]ibrary/ScriptMapper
+/[Ll]ibrary/AssetVersioning.db
+/[Ll]ibrary/BuildSettings.asset
+/[Ll]ibrary/InspectorExpandedItems.asset
+/[Ll]ibrary/MonoManager.asset
+/[Ll]ibrary/UnityAssemblies.xml
+/[Ll]ibrary/LastSceneManagerSetup.txt
+/[Ll]ibrary/EditorUserBuildSettings.asset
+/[Ll]ibrary/expandedItems
+/[Ll]ibrary/FailedAssetImports.txt
+/[Ll]ibrary/SceneVisibilityState.asset
+/[Ll]ibrary/assetDatabase3
+/[Ll]ibrary/guidmapper
+/[Ll]ibrary/unity default resources
+/[Ll]ibrary/unity editor resources
+/[Ll]ibrary/AtlasCache/
+/[Ll]ibrary/AudioManager.asset
+/[Ll]ibrary/DynamicsManager.asset
+/[Ll]ibrary/EditorSettings.asset
+/[Ll]ibrary/InputManager.asset
+/[Ll]ibrary/NavMeshAreas.asset
+/[Ll]ibrary/NetworkManager.asset
+/[Ll]ibrary/Physics2DSettings.asset
+/[Ll]ibrary/ProjectSettings.asset
+/[Ll]ibrary/QualitySettings.asset
+/[Ll]ibrary/TagManager.asset
+/[Ll]ibrary/TimeManager.asset
+/[Ll]ibrary/VFXManager.asset
+/[Ll]ibrary/XRSettings.asset
+/[Ll]ibrary/TutorialFramework/
+/[Ll]ibrary/Search/
+/[Ll]ibrary/StateCache/
+/[Ll]ibrary/TempArtifacts/
+/[Ll]ibrary/BurstCache/
+/[Ll]ibrary/Bee/
+
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
 *.blend1.meta
+
+# Large media files - be selective about which ones to include
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.flv
+*.wav
+*.mp3
+*.ogg
+*.flac
+*.aiff
+*.psd
+*.tiff
+*.tga
+*.exr
+*.hdr
+
+# Large 3D model files - consider using Git LFS for essential ones
+*.fbx
+*.obj
+*.3ds
+*.dae
+*.blend
+*.ma
+*.mb
+*.max
+
+# Texture files - consider using Git LFS for essential ones
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.tif
+*.tiff
+*.gif
+*.webp
+
+# Font files
+*.ttf
+*.otf
+*.woff
+*.woff2
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -33,6 +134,7 @@
 
 # Visual Studio cache directory
 .vs/
+.vscode/
 
 # Gradle cache directory
 .gradle/
@@ -72,6 +174,8 @@ mono_crash.*
 *.unitypackage
 *.unitypackage.meta
 *.app
+*.ipa
+*.exe
 
 # Crashlytics generated file
 crashlytics-build.properties
@@ -97,3 +201,22 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Platform specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*~
+*.swp
+*.swo
+
+# IDE files
+*.ide
+*.ide-shm
+*.ide-wal
