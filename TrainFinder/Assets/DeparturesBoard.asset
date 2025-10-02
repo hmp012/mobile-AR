@@ -16,4 +16,24 @@ MonoBehaviour:
   m_GuidHigh: 3153997384804520338
   m_DataStore:
     m_Storage: []
-  m_Images: []
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 5606967379877640914
+      m_GuidHigh: 11451447066132724403
+    m_SerializedTextureGuid:
+      m_GuidLow: 3753119110880647558
+      m_GuidHigh: 8755669068226550856
+    m_Size: {x: 90, y: 57.376587}
+    m_SpecifySize: 1
+    m_Name: DeparturesBoard
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5146710116124800172
+      m_GuidHigh: 16904434917968654514
+    m_SerializedTextureGuid:
+      m_GuidLow: 1503077938663796981
+      m_GuidHigh: 12652857549185774810
+    m_Size: {x: 12, y: 20.493994}
+    m_SpecifySize: 1
+    m_Name: Mailbox
+    m_Texture: {fileID: 0}
