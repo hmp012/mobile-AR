@@ -82,6 +82,15 @@ extern void U3CWaitUntilNextCardU3Ed__36_MoveNext_mABE95FF2334C1607DCD0F8EB0A9A7
 extern void U3CWaitUntilNextCardU3Ed__36_System_Collections_Generic_IEnumeratorU3CSystem_ObjectU3E_get_Current_m5FCEEE9A8231F83F1EC75CF9C626815CEBA1E751 (void);
 extern void U3CWaitUntilNextCardU3Ed__36_System_Collections_IEnumerator_Reset_m1B7293799D7B9FEEFD4125924CA90DDA0488B21C (void);
 extern void U3CWaitUntilNextCardU3Ed__36_System_Collections_IEnumerator_get_Current_m32915AC988ADACC69CBD8486A12AF1B0F2CBAC4B (void);
+extern void NavigationFromMarker_OnEnable_m00FC94A515BA22B5703B2E11336AF5528D7E1465 (void);
+extern void NavigationFromMarker_OnDisable_mBF6E009711204CAC97D5FD701DBB6BE949EB921B (void);
+extern void NavigationFromMarker_SetupLine_m90591A07A2AA6A66808E6258A79373A838D8427D (void);
+extern void NavigationFromMarker_EnableLines_m575FC0A5EA2627E94794A30BEE0609B25CFD5E33 (void);
+extern void NavigationFromMarker_Update_m09962B6CDACC23E9FAAF4EEAE501E7059920DAD5 (void);
+extern void NavigationFromMarker_UpdateLine_m8E70A44D8755A1582345E8B72DA446A1CB81BC1F (void);
+extern void NavigationFromMarker_OnTrackedImagesChanged_m464E00277496870EDFCDCE340CF84D963FC5B8C9 (void);
+extern void NavigationFromMarker_TryUse_m80309DF210E2C85D68EE08DFFB3427531CC498C2 (void);
+extern void NavigationFromMarker__ctor_mD33439EC01F55DA20FBC48E789302B5C53E8A78D (void);
 extern void ArrowGenerator_Awake_m82C60379E4711BFC6035BD2A43D3B2C38031C995 (void);
 extern void ArrowGenerator_GenerateConeOnGameObject_m887B084D2FB583D110A257B1054EA5A59E2147BD (void);
 extern void ArrowGenerator__ctor_mBE2F0C0CC8F268F4A8AF1827474BB0D3715724AD (void);
@@ -118,7 +127,7 @@ extern void ARFeatheredPlaneMeshVisualizerCompanion_OnDestroy_m64B601920050D7584
 extern void ARFeatheredPlaneMeshVisualizerCompanion_Update_m541F58E1FC27F7D775FE47F2C1B1A04710BC4A27 (void);
 extern void ARFeatheredPlaneMeshVisualizerCompanion_set_visualizeSurfaces_m7A7F198C97A315F6F7F58F0BDA5269863F098D68 (void);
 extern void ARFeatheredPlaneMeshVisualizerCompanion__ctor_m3871FAD2A1135D983A9B5ADCD604F22949DE985C (void);
-static Il2CppMethodPointer s_methodPointers[111] = 
+static Il2CppMethodPointer s_methodPointers[120] = 
 {
 	ARTemplateMenuManager_get_createButton_mF094F0AC7A89F9C92C57D8517519509825A145E4,
 	ARTemplateMenuManager_set_createButton_mD65905DD827D87E747095FDAF9CE38892C4340EB,
@@ -195,6 +204,15 @@ static Il2CppMethodPointer s_methodPointers[111] =
 	U3CWaitUntilNextCardU3Ed__36_System_Collections_Generic_IEnumeratorU3CSystem_ObjectU3E_get_Current_m5FCEEE9A8231F83F1EC75CF9C626815CEBA1E751,
 	U3CWaitUntilNextCardU3Ed__36_System_Collections_IEnumerator_Reset_m1B7293799D7B9FEEFD4125924CA90DDA0488B21C,
 	U3CWaitUntilNextCardU3Ed__36_System_Collections_IEnumerator_get_Current_m32915AC988ADACC69CBD8486A12AF1B0F2CBAC4B,
+	NavigationFromMarker_OnEnable_m00FC94A515BA22B5703B2E11336AF5528D7E1465,
+	NavigationFromMarker_OnDisable_mBF6E009711204CAC97D5FD701DBB6BE949EB921B,
+	NavigationFromMarker_SetupLine_m90591A07A2AA6A66808E6258A79373A838D8427D,
+	NavigationFromMarker_EnableLines_m575FC0A5EA2627E94794A30BEE0609B25CFD5E33,
+	NavigationFromMarker_Update_m09962B6CDACC23E9FAAF4EEAE501E7059920DAD5,
+	NavigationFromMarker_UpdateLine_m8E70A44D8755A1582345E8B72DA446A1CB81BC1F,
+	NavigationFromMarker_OnTrackedImagesChanged_m464E00277496870EDFCDCE340CF84D963FC5B8C9,
+	NavigationFromMarker_TryUse_m80309DF210E2C85D68EE08DFFB3427531CC498C2,
+	NavigationFromMarker__ctor_mD33439EC01F55DA20FBC48E789302B5C53E8A78D,
 	ArrowGenerator_Awake_m82C60379E4711BFC6035BD2A43D3B2C38031C995,
 	ArrowGenerator_GenerateConeOnGameObject_m887B084D2FB583D110A257B1054EA5A59E2147BD,
 	ArrowGenerator__ctor_mBE2F0C0CC8F268F4A8AF1827474BB0D3715724AD,
@@ -237,7 +255,7 @@ static Il2CppTokenAdjustorThunkPair s_adjustorThunks[1] =
 {
 	{ 0x06000030, Goal__ctor_m1545B6E40E910D8B0648797BF96520F84FF2FF40_AdjustorThunk },
 };
-static const int32_t s_InvokerIndices[111] = 
+static const int32_t s_InvokerIndices[120] = 
 {
 	15172,
 	11668,
@@ -315,6 +333,15 @@ static const int32_t s_InvokerIndices[111] =
 	15367,
 	15172,
 	15367,
+	15367,
+	11668,
+	11472,
+	15367,
+	3642,
+	11437,
+	11668,
+	15367,
+	15367,
 	2644,
 	15367,
 	15367,
@@ -355,7 +382,7 @@ IL2CPP_EXTERN_C const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule;
 const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule = 
 {
 	"Assembly-CSharp.dll",
-	111,
+	120,
 	s_methodPointers,
 	1,
 	s_adjustorThunks,
