@@ -35,6 +35,13 @@ public class ImageLocalization : MonoBehaviour
     [Tooltip("Use simple localization algorithm (recommended)")]
     public bool useSimpleLocalization = true;
     
+    [Tooltip("Smoothing factor for localization to reduce jitter. 0 = no smoothing, 1 = instant. 0.1 is a good start.")]
+    [Range(0, 1)]
+    public float localizationSmoothingFactor = 0.1f;
+
+    [Tooltip("Allow re-localization if a tracked image is seen again after initial localization.")]
+    public bool allowRelocalization = true;
+    
     [Tooltip("Enable detailed debug logging")]
     public bool enableDebugLogs = true;
 
@@ -58,6 +65,12 @@ public class ImageLocalization : MonoBehaviour
     private bool isLocalized = false;
     private Dictionary<TrackableId, ARTrackedImage> trackedImages = new Dictionary<TrackableId, ARTrackedImage>();
     private float lastPathUpdateTime = 0f;
+    private ARTrackedImage currentTrackedImage;
+
+    // Smoothing targets
+    private Vector3 targetOriginPosition;
+    private Quaternion targetOriginRotation;
+    private bool isSmoothing = false;
 
     private void OnEnable()
     {
@@ -139,8 +152,8 @@ public class ImageLocalization : MonoBehaviour
             trackedImages[trackedImage.trackableId] = trackedImage;
             DebugLog($"🆕 New image detected: '{trackedImage.referenceImage.name}'");
             
-            // Try to localize immediately
-            if (!isLocalized)
+            // Try to localize immediately if not localized, or if re-localization is enabled
+            if (!isLocalized || allowRelocalization)
             {
                 LocalizeUser(trackedImage);
             }
@@ -151,8 +164,8 @@ public class ImageLocalization : MonoBehaviour
         {
             trackedImages[trackedImage.trackableId] = trackedImage;
             
-            // If not yet localized and image tracking is stable, try to localize
-            if (!isLocalized && trackedImage.trackingState == TrackingState.Tracking)
+            // If tracking is stable, consider it for re-localization
+            if (trackedImage.trackingState == TrackingState.Tracking && allowRelocalization)
             {
                 DebugLog($"🔄 Image updated and tracking: '{trackedImage.referenceImage.name}'");
                 LocalizeUser(trackedImage);
@@ -166,12 +179,24 @@ public class ImageLocalization : MonoBehaviour
             {
                 trackedImages.Remove(trackedImage.trackableId);
                 DebugLog($"🗑️ Image removed: '{trackedImage.referenceImage.name}'");
+
+                if (currentTrackedImage == trackedImage)
+                {
+                    currentTrackedImage = null;
+                    DebugLog("Current tracked image lost.");
+                }
             }
         }
     }
 
     private void LocalizeUser(ARTrackedImage trackedImage)
     {
+        // If we are already localized and re-localization is disabled, do nothing.
+        if (isLocalized && !allowRelocalization && trackedImage == currentTrackedImage)
+        {
+            return;
+        }
+
         DebugLog($"🔍 LocalizeUser: Attempting to find anchor for image '{trackedImage.referenceImage.name}'");
 
         // Check that AR tracking is stable
@@ -187,17 +212,12 @@ public class ImageLocalization : MonoBehaviour
         if (anchor == null)
         {
             Debug.LogWarning($"❌ No matching anchor found for image '{trackedImage.referenceImage.name}'!");
-            DebugLog("Available anchors:");
-            foreach (var a in imageAnchors)
-            {
-                DebugLog($"  - '{a.imageName}'");
-            }
             return;
         }
         
+        currentTrackedImage = trackedImage;
+        
         DebugLog($"✓ Found matching anchor for '{trackedImage.referenceImage.name}'");
-        DebugLog($"📍 Tracked image position in AR space: {trackedImage.transform.position.ToString("F3")}");
-        DebugLog($"📍 Virtual anchor position in scene: {anchor.anchorTransform.position.ToString("F3")}");
 
         // Get the camera to determine current user position
         Camera arCamera = xrOrigin.GetComponentInChildren<Camera>();
@@ -207,55 +227,25 @@ public class ImageLocalization : MonoBehaviour
             return;
         }
 
-        // Get the camera's current position in AR space (before we move anything)
-        Vector3 cameraPositionInARSpace = arCamera.transform.position;
-        Quaternion cameraRotationInARSpace = arCamera.transform.rotation;
+        // Calculate the desired XR Origin rotation and position
+        // Quaternion desiredRotation = trackedImage.transform.rotation * Quaternion.Inverse(anchor.anchorTransform.rotation);
+        // Vector3 desiredPosition = trackedImage.transform.position - (desiredRotation * anchor.anchorTransform.position);
+        Vector3 desiredPosition = new Vector3(66, (float)0.5, 40);
+
+        // Set these as the new targets for smoothing
+        targetOriginPosition = desiredPosition;
+        // targetOriginRotation = desiredRotation;
+        isSmoothing = true;
+
+        if (!isLocalized)
+        {
+            // If this is the first localization, snap instantly
+            xrOrigin.SetPositionAndRotation(targetOriginPosition, targetOriginRotation);
+            DebugLog($"🎉 First localization complete! Snapped XR Origin.");
+            isLocalized = true;
+        }
         
-        DebugLog($"📷 Camera position in AR space (before localization): {cameraPositionInARSpace.ToString("F3")}");
-
-        if (useSimpleLocalization)
-        {
-            DebugLog("Using SIMPLE localization mode");
-            
-            // Calculate the offset from camera to tracked image in AR space
-            Vector3 cameraToImage = trackedImage.transform.position - cameraPositionInARSpace;
-            
-            Vector3 cameraLocalPosition = arCamera.transform.localPosition;
-            
-            // First, handle rotation
-            Quaternion imageRotationOffset = trackedImage.transform.rotation * Quaternion.Inverse(anchor.anchorTransform.rotation);
-            xrOrigin.rotation = imageRotationOffset;
-            
-            // Then position: we want the camera to end up at (anchor.position - rotated(cameraToImage))
-            Vector3 rotatedCameraToImage = xrOrigin.rotation * cameraToImage;
-            Vector3 desiredCameraWorldPos = anchor.anchorTransform.position - rotatedCameraToImage;
-            xrOrigin.position = desiredCameraWorldPos - (xrOrigin.rotation * cameraLocalPosition);
-            
-            DebugLog($"✅ Simple localization complete");
-            DebugLog($"   XR Origin position: {xrOrigin.position.ToString("F3")}");
-            DebugLog($"   XR Origin rotation: {xrOrigin.rotation.eulerAngles.ToString("F1")}");
-            DebugLog($"   Camera now at: {arCamera.transform.position.ToString("F3")}");
-            DebugLog($"   Distance from camera to anchor: {Vector3.Distance(arCamera.transform.position, anchor.anchorTransform.position).ToString("F2")}m");
-        }
-        else
-        {
-            DebugLog("Using COMPLEX localization mode");
-            
-            // COMPLEX MODE: Original logic
-            Quaternion rotationOffset = trackedImage.transform.rotation * Quaternion.Inverse(anchor.anchorTransform.rotation);
-            xrOrigin.rotation = rotationOffset;
-            Vector3 positionOffset = trackedImage.transform.position - (xrOrigin.rotation * anchor.anchorTransform.position);
-            xrOrigin.position = positionOffset;
-            
-            DebugLog($"✅ Complex localization complete");
-            DebugLog($"   XR Origin position: {xrOrigin.position.ToString("F3")}");
-            DebugLog($"   XR Origin rotation: {xrOrigin.rotation.eulerAngles.ToString("F1")}");
-        }
-
-        isLocalized = true;
-        DebugLog($"🎉 isLocalized set to TRUE");
-        DebugLog($"⚠️ IMPORTANT: Arrow will NOT appear until you start navigation by setting a path!");
-        DebugLog($"   Current path corners: {(navMeshPath != null ? navMeshPath.corners.Length : 0)}");
+        DebugLog($"🎯 New target set for XR Origin based on '{trackedImage.referenceImage.name}'");
         
         // Calculate NavMesh path if enabled
         if (autoCalculatePathOnLocalization && navMeshPath != null && navigationTarget != null)
@@ -442,6 +432,23 @@ public class ImageLocalization : MonoBehaviour
 
     private void Update()
     {
+        // Apply smoothing to the XR Origin's position and rotation
+        if (isSmoothing && isLocalized)
+        {
+            // Smoothly move the XR Origin towards the target position and rotation
+            xrOrigin.position = Vector3.Lerp(xrOrigin.position, targetOriginPosition, localizationSmoothingFactor);
+            xrOrigin.rotation = Quaternion.Slerp(xrOrigin.rotation, targetOriginRotation, localizationSmoothingFactor);
+            
+            Debug.LogWarning($"Xr origin pos: {xrOrigin.position.ToString("F3")}, target pos: {targetOriginPosition.ToString("F3")}");
+            Debug.LogWarning($"Xr origin rotation: {xrOrigin.rotation.ToString("F3")}, target pos: {targetOriginRotation.ToString("F3")}");
+            // If we are close enough to the target, stop smoothing to save performance
+            if (Vector3.Distance(xrOrigin.position, targetOriginPosition) < 0.01f &&
+                Quaternion.Angle(xrOrigin.rotation, targetOriginRotation) < 0.1f)
+            {
+                isSmoothing = false;
+            }
+        }
+        
         // Continuously update path if enabled and localized
         if (updatePathContinuously && isLocalized && navigationTarget != null)
         {

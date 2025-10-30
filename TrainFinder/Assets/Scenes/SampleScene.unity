@@ -540,10 +540,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 870293776}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: b6c74d44479a245feb81465decb4143a,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1571486779}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b6c74d44479a245feb81465decb4143a,
         type: 3}
@@ -586,7 +582,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_UseGeometry: 0
   m_DefaultArea: 0
-  m_GenerateLinks: 0
+  m_GenerateLinks: 1
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
   m_OverrideTileSize: 0
@@ -1741,58 +1737,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1499428999}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1571486778
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1571486779}
-  - component: {fileID: 1571486780}
-  m_Layer: 0
-  m_Name: ImageTrackingManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1571486779
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1571486778}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 363100359}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1571486780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1571486778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7caa5087d0464b31a0c751442b9626c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ImageTrackingWorldAnchor
-  trackedImageManager: {fileID: 331264290}
-  virtualWorldRoot: {fileID: 363100355}
-  positionOffset: {x: 0, y: 0, z: 0}
-  rotationOffset: {x: 0, y: 0, z: 0}
-  persistentAnchor: 1
-  isWorldAnchored: 0
-  anchoredWorldPosition: {x: 0, y: 0, z: 0}
-  anchoredWorldRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1685157906
 GameObject:
   m_ObjectHideFlags: 0
@@ -1828,6 +1772,8 @@ MonoBehaviour:
   - imageName: SecurityCamera
     anchorTransform: {fileID: 608830357}
   useSimpleLocalization: 1
+  localizationSmoothingFactor: 0.1
+  allowRelocalization: 1
   enableDebugLogs: 1
   navigationTarget: {fileID: 156733012}
   autoCalculatePathOnLocalization: 1
@@ -1885,14 +1831,11 @@ MonoBehaviour:
   lineMaterial: {fileID: 2100000, guid: 3e7769bfd75214c848fd1075aac4b70e, type: 2}
   heightOffset: 0.1
   useSimpleCap: 1
-  smoothPath: 1
-  smoothingSegments: 3
   onlyShowWhenLocalized: 1
   enableDebugLogs: 1
-  showDebugSpheres: 1
-  debugSphereSize: 0.1
   showGapIndicator: 1
   gapIndicatorColor: {r: 1, g: 0, b: 0, a: 1}
+  gapIndicatorSize: 0.08
 --- !u!4 &1796759436
 Transform:
   m_ObjectHideFlags: 0

@@ -123,24 +123,24 @@ public class PathVisualizer : MonoBehaviour
 
     private void Update()
     {
-        if (imageLocalization == null || lineRenderer == null)
-        {
-            HidePath();
-            return;
-        }
-
-        if (onlyShowWhenLocalized && !imageLocalization.IsLocalized())
-        {
-            HidePath();
-            return;
-        }
+        // if (imageLocalization == null || lineRenderer == null)
+        // {
+        //     HidePath();
+        //     return;
+        // }
+        //
+        // if (onlyShowWhenLocalized && !imageLocalization.IsLocalized())
+        // {
+        //     HidePath();
+        //     return;
+        // }
 
         // Usamos el path que mantiene ImageLocalization
         currentPath = imageLocalization.navMeshPath; // expuesto en ImageLocalization:contentReference[oaicite:2]{index=2}
 
         if (currentPath == null || currentPath.corners == null || currentPath.corners.Length < 2)
         {
-            HidePath();
+            // HidePath();
             if (enableDebugLogs && currentPath != null)
                 Debug.LogWarning($"[PathVisualizer] Path con pocos puntos: {currentPath.corners.Length}");
             return;
@@ -154,7 +154,7 @@ public class PathVisualizer : MonoBehaviour
         if (lineRenderer == null || path == null) return;
 
         var corners = path.corners;
-        if (corners == null || corners.Length < 2)
+        if (corners == null)
         {
             HidePath();
             return;
