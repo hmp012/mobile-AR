@@ -23,6 +23,7 @@ public class PathVisualizer : MonoBehaviour
         _lineRenderer.material = lineMaterial;
         _lineRenderer.startWidth = 0;
         _lineRenderer.endWidth = 0;
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
     void Update()
