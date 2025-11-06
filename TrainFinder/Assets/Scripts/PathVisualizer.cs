@@ -26,9 +26,9 @@ public class PathVisualizer : MonoBehaviour
     private NavMeshSurface _navMeshSurface;
     private List<Vector3> _pathCorners = new();
     private Vector3 _lastCalculatedPosition;
-    private float _recalculationThreshold = 0.5f; // Only recalculate if moved 0.5 units
+    private readonly float _recalculationThreshold = 0.5f; // Only recalculate if moved 0.5 units
     private float _timeSinceLastCalculation = 0f;
-    private float _recalculationInterval = 0.1f; // Max 10 times per second
+    private readonly float _recalculationInterval = 0.1f; // Max 10 times per second
 
 
     void Start()
