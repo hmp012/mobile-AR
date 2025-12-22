@@ -42,3 +42,6 @@ We also use Google drive to handle large files such as 3D models and textures.
 - [Mittog](mittog.dk)
 - [RealityKit](https://developer.apple.com/augmented-reality/realitykit/)
 - [ARKit](https://developer.apple.com/augmented-reality/arkit/)
+
+
+Authors: Hugo & Kateryna
