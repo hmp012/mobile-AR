@@ -37,17 +37,40 @@ We baked the navigation mesh on the station’s **walkable geometry** (floors/st
 
 Finally, small adjustements were done in the avatar configuration, as the stairs were showing with too much incline for the user to climb. So we set that the avatar can climb up to 2 meters high walls, avoiding issues with the stairs leading to the station.
 
+### Wayfinding (visualizing the route)
+
+Once the NavMesh was working, the next step was to show the user a clear route in AR. We tried two different ways of handling the wayfinding line:
+
+**Approach 1: a separate “line” GameObject in the scene**
+- We initially treated the wayfinding line as its own GameObject (typically something like a Line Renderer) that we could place, tweak, and inspect in the hierarchy.
+- This made it easy to prototype visually, but it also meant we had to keep the line object, its references, and its updates in sync with whatever the navigation system was computing.
+
+**Approach 2: generate/manage the line renderer programmatically**
+- Later, we moved the responsibility entirely into our **Indoor nav** script, generating/updating the line at runtime from the computed route points.
+- This ended up being easier to manage because the line always reflected the latest path calculation without us having to manually maintain a separate scene object.
+
+In the end, we chose the second approach (no separate line GameObject) because it simplified our scene setup and reduced the number of objects we had to coordinate manually.
+
 ### Following tutorials (and breaking XR)
 
 In the beginning we relied heavily on tutorials. That helped us move fast, but it also led to one of our biggest early mistakes: a tutorial suggested removing a few scripts/components from the **XROrigin** to “clean things up”. We followed it without fully understanding what those components were responsible for.
 
 The result was confusing: tracking and interaction stopped behaving correctly, and it wasn’t obvious *why* because nothing looked “wrong” in the scene at first glance. This was a good lesson that in XR/AR projects, the **XROrigin** is not just another GameObject — it is the foundation that ties together camera tracking, input, and world-space alignment. From that point on, we became more careful about copying tutorial steps blindly and started verifying changes one-by-one.
 
+What clicked for us later is that mobile AR relies on **inside-out tracking** (often described as markerless tracking): the phone constantly estimates its position and rotation using its camera + inertial sensors. The XROrigin and AR camera setup are the glue between that continuously-updated pose and the Unity scene. If that glue is misconfigured, it can look like “Unity is broken”, but it is usually us accidentally breaking the tracking-to-world relationship.
+
 Far too much time was spent trying to identify this issue. This increased tension in the team, due to a restrictive deadline, as well as a lack of understanding.
 
 ### Moving the XROrigin was harder than expected
 
 Another challenge was simply trying to “move the user” or reposition  content when Localization was completed. Coming from non-AR thinking, our instinct was to move the camera or move the origin directly. In AR, however, the device tracking controls the camera pose, and moving the **XROrigin** can easily create offsets that feel like bugs (objects drifting, anchors not lining up, or the scene appearing to jump).
+
+In hindsight, we were mixing two different coordinate frames:
+
+- the pose coming from inside-out tracking (what the device believes, updated every frame)
+- the alignment we wanted (how the scanned station model should line up with the real station)
+
+When those frames don’t match, it becomes tempting to “force” the camera or origin into place, but that can conflict with the tracking updates. A more stable approach is often to align the virtual content *once* to a known reference, and then let tracking update the camera normally.
 
 We spent time experimenting and learning the difference between:
 
@@ -68,7 +91,35 @@ For the app, once the image was identified and the AR Session was tracking, we t
 1. As mentioned above, setting the rotation of the Camera or the XrOrigin was not working.
 2. The results of the calculation of the distance at which the camera was located from the tracked image were very inconsistent. This lead to the decision of hardcoding the values of the transform of the camera once the image was recognized. Definetively not ideal, but could get us working.
 
-A major lesson here was that in AR, tracking effectively “owns” the camera pose. Trying to move/rotate the AR Camera or XROrigin directly can easily fight the tracking system and create offsets that look like bugs.
+A major lesson here was that in AR, tracking effectively “owns” the camera pose once the session is running. The phone is doing full **6 DOF** tracking (rotation + translation), and it will keep correcting its estimate as it sees new visual features. If we try to impose our own rotation on the camera/origin at the same time, the result can look inconsistent because we are effectively fighting a real-time state estimator.
+
+Looking back, the clean mental model is:
+
+1. use the tracked image to establish a reliable “start” reference (anchor)
+2. then rely on inside-out tracking to maintain stability as the user walks
+
+## XR concepts we learned along the way
+
+We didn’t start the project with perfect XR vocabulary, but a few concepts became very concrete while debugging localization:
+
+- **Markerless / inside-out tracking:** the device estimates its own pose from camera features + IMU (this is what keeps content world-locked while you walk).
+- **3 DOF vs 6 DOF:** 3 DOF is rotation-only; 6 DOF adds translation (mobile AR needs 6 DOF to anchor content convincingly).
+- **OpenXR (idea):** a cross-vendor standard API intended to make XR apps more portable across devices/runtimes.
+- **Interaction in XR:** inputs and UI are spatial (pose/gesture/rays), and feedback cues matter more because users are moving in the real world.
+- **HRTFs:** we didn’t implement HRTF spatial audio in TrainFinder; our guidance was mainly visual, but directional audio could be an interesting future improvement.
+
+If we explain it in slightly more technical terms:
+
+- **How markerless tracking works:** the phone uses a form of visual-inertial odometry (VIO). The IMU provides short-term motion estimates, and the camera provides “feature points” in the environment that the system can recognize across frames. By fusing these signals, the device can estimate its 6 DOF pose and keep correcting drift as it sees more of the scene. This is why lighting, motion blur, reflective surfaces, and textureless areas can make tracking less stable.
+
+- **Why OpenXR exists:** different headsets historically exposed different APIs, input models, and rendering paths. OpenXR tries to standardize the common pieces (pose tracking, input, composition layers, swapchains, etc.) so engines like Unity can target multiple runtimes with less platform-specific code.
+
+- **Why interaction feels different in XR:** the user is not “at a screen”, they are *in* the environment. That changes assumptions:
+	- interaction often starts with **pose** (head/hand/controller) rather than a cursor
+	- UI needs to stay **readable and reachable** in 3D space
+	- feedback needs to be immediate and multi-modal (visual/audio/haptics)
+
+In TrainFinder, interaction was intentionally minimal: most of the “input” was the user physically walking, while the system tried to keep the guidance stable and correctly aligned.
 
 #### Google ARCore image quality score (feature rating)
 The first images we collected from the train station were the mailbox at the entrance, and the departures board:
@@ -111,3 +162,5 @@ Only at the end of the project we managed to setup Git Large File system, which 
 We also ran into a very practical problem with our 3D assets: one of our models was simply too big/heavy for what we were trying to do. Importing it into Unity worked, but it increased project size and made iteration slower. On mobile AR, that kind of asset can also hurt performance (load times, memory usage, and frame rate).
 
 This pushed us to learn about asset optimization: reducing polygon counts, compressing textures, and thinking about the “mobile budget” from the start instead of treating the model as if it were for desktop rendering.
+
+Author: Hugo

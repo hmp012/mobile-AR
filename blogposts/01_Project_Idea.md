@@ -22,6 +22,40 @@ Because the Horsens train station has a medium size, it can be confusing for new
 
 The purpose of TrainFinder is to help users quickly and easily find their correct platform using augmented reality guidance. Our idea was to let the user **localize itself** by scanning specific pictures located inside the station, and then show a path in the device, showing the users which steps to take in order to. To do this, the device would use the camera and sensors to track the user's position in real time, updating the path accordingly.
 
+## XR terminology (AR/VR/AV/MR/XR)
+
+During the project we often used “AR” and “XR” interchangeably, but they are not the same:
+
+- **XR (Extended Reality)** is the umbrella term for immersive technologies.
+- **AR (Augmented Reality)** overlays virtual content on the real world (our project).
+- **VR (Virtual Reality)** replaces the real world with a fully virtual environment.
+- **MR (Mixed Reality)** is AR with stronger spatial understanding, so virtual content behaves as if it is part of the physical space (anchoring, occlusion, interaction with surfaces).
+- **AV (Augmented Virtuality)** is closer to VR but brings real-world elements into the virtual scene (e.g., passthrough video or tracked real objects inside a virtual environment).
+
+## How TrainFinder adds value to the end user
+
+The main value is practical: **reduce confusion and speed up decisions** in a space that can be stressful and time-critical.
+
+- Less “map reading” and interpretation of signage, especially for newcomers.
+- Faster path selection under pressure (e.g., short transfer times).
+- Potential accessibility benefits if expanded later (step-free routes, clearer cues, multimodal guidance).
+
+## Why XR helps in this case (what AR adds vs a normal app)
+
+A normal 2D map can tell you what to do, but AR can show it **in the same space where you are acting**.
+
+- **In-context guidance:** the route appears where you walk, not on an abstract diagram.
+- **Reduced cognitive load:** less mental work converting “map space” into “real space”.
+- **Better orientation for non-locals:** the user can keep attention on the environment while still receiving guidance.
+
+## Unique use cases for this application pattern
+
+Even though TrainFinder is limited to Horsens station for this project, the same approach applies to:
+
+- Indoor navigation in stations, airports, hospitals, campuses, malls.
+- Event venues (temporary wayfinding that changes day-to-day).
+- “Last-meter” navigation: guiding to a specific entrance, platform section, meeting point, or service desk.
+
 ### Going beyond the MVP
 
 A simple project would just show a dropdown for the user to select which platform to head towards. However, we also carried some investigation and found some interesting APIs that could enhance the User Experience. For starters, the platform in which a train would arrive is publicly available in the [Rejseplanen API](https://labs.rejseplanen.dk/hc/en-us), so there are several alternatives for the user to select a platform:
