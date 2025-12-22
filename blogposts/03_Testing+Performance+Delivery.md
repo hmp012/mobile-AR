@@ -121,7 +121,7 @@ Because of that, our final working approaches were essentially fallbacks:
 - **Hardcoded transform:** once the image was recognized, we forced a fixed position/rotation that looked acceptable in our test conditions.
 - **Place the XR Origin relative to the image:** we positioned the **XR Origin directly in front of the tracked image** and, upon detection, instantiated the “base” object that contained the navigation mesh/world content.
 
-One practical issue that caused a lot of trouble during real-world use was **traversing doors** while the app was running. When we walked through doorways, tracking and alignment often became noticeably less stable (e.g., brief loss of tracking, jitter, or the content appearing offset), which we captured in our demo video (insert link).
+One practical issue that caused a lot of trouble during real-world use was **traversing doors** while the app was running. When we walked through doorways, tracking and alignment often became noticeably less stable (e.g., brief loss of tracking, jitter, or the content appearing offset), which we captured in our [demo video](https://viaucdk-my.sharepoint.com/:v:/g/personal/331305_viauc_dk/IQB-Fl3yqOf5RLEuaD2_7o3HATMBioefg0rZ9TRtw7Q9K_4?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=pjVlmU).
 
 These approaches let us demonstrate the concept, but they are not robust enough for a real deployment where the user must get consistent localization across different distances, angles, and lighting conditions.
 
