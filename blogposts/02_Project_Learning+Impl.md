@@ -96,6 +96,16 @@ Early on we didn’t have a proper `.gitignore` for Unity. That meant the reposi
 
 Thankfully, we realized before the first commit was pushed, so we cleaned up and started treating the repository more professionally: only source assets and settings should be tracked, while generated folders (like Unity’s `Library/`) and build artifacts should not be versioned.
 
+### Large 3D assets and Git limitations
+
+Another issue we ran into was simply trying to version the scanned 3D models. The raw scans (and even some intermediate exports like `.fbx`/`.obj`) were large binary files, and pushing them to a remote Git host repeatedly caused problems (upload failures / file size limits).
+
+This forced us to rethink what should live in Git: we kept the Unity project files, while treating the full-resolution scans as external project data (stored separately) rather than source code.
+
+This brought up new complexity to the project, as we had to constantly share and update the files on each other's computer in order to stay up to date with the latest changes.
+
+Only at the end of the project we managed to setup Git Large File system, which by then, most of the project had been done already.
+
 ### 3D model scale/performance issues
 
 We also ran into a very practical problem with our 3D assets: one of our models was simply too big/heavy for what we were trying to do. Importing it into Unity worked, but it increased project size and made iteration slower. On mobile AR, that kind of asset can also hurt performance (load times, memory usage, and frame rate).
