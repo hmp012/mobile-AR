@@ -16,7 +16,7 @@ Even with the same Unity project and settings, AR performance differed drastical
 - On the **iPhone 15**, tracking and rendering stayed smooth and responsive.
 - On our **Android device**, the app felt heavier: frame drops were more common and the experience degraded faster over time.
 
-This wasn’t one single bug — it was the combined cost of:
+This wasn’t a single bug — it was the combined cost of:
 
 - running AR tracking (camera feed + pose estimation)
 - rendering the scene on top of the camera background
@@ -121,7 +121,7 @@ Because of that, our final working approaches were essentially fallbacks:
 - **Hardcoded transform:** once the image was recognized, we forced a fixed position/rotation that looked acceptable in our test conditions.
 - **Place the XR Origin relative to the image:** we positioned the **XR Origin directly in front of the tracked image** and, upon detection, instantiated the “base” object that contained the navigation mesh/world content.
 
-One practical issue that caused a lot of trouble during real-world use was **traversing doors** while the app was running. When we walked through doorways, tracking and alignment often became noticeably less stable (e.g., brief loss of tracking, jitter, or the content appearing offset), which we captured in our demo video: (insert link).
+One practical issue that caused a lot of trouble during real-world use was **traversing doors** while the app was running. When we walked through doorways, tracking and alignment often became noticeably less stable (e.g., brief loss of tracking, jitter, or the content appearing offset), which we captured in our demo video (insert link).
 
 These approaches let us demonstrate the concept, but they are not robust enough for a real deployment where the user must get consistent localization across different distances, angles, and lighting conditions.
 
@@ -140,7 +140,7 @@ The biggest contributors were the constant cost of AR tracking (camera + pose es
 
 ### What challenges do advancements in AR face at the moment?
 
-From our project experience, the biggest “real world” challenges are less about rendering and more about robustness:
+From our project experience, the biggest “real-world” challenges are less about rendering and more about robustness:
 
 - **Reliable localization and drift:** keeping virtual content consistently aligned over time and across conditions.
 - **Visual conditions:** glare, reflections, motion blur, low light, and textureless surfaces hurt tracking.
@@ -153,7 +153,7 @@ From our project experience, the biggest “real world” challenges are less ab
 
 Even though TrainFinder is a mobile AR project, VR headsets like Quest highlight differences that also apply to XR development more generally:
 
-- **Build target and deployment:** you ship to a headset runtime (Android-based on Quest), not a desktop OS; iteration is often “build + install + test in-headset”.
+- **Build target and deployment:** you ship to a headset runtime (Android-based on Quest), not a desktop OS; iteration is often “build + install + test in headset”.
 - **Input model:** instead of mouse/keyboard, you design for head + controller/hand tracking, rays/grabs, and XR interaction patterns.
 - **Performance budget:** high, stable frame rate is mandatory for comfort; you optimize aggressively (CPU/GPU, draw calls, fill rate, foveation, fixed refresh rates).
 - **Rendering expectations:** stereo rendering, late latching/timewarp, and careful UI depth/scale choices become part of the day-to-day workflow.
