@@ -163,4 +163,12 @@ We also ran into a very practical problem with our 3D assets: one of our models 
 
 This pushed us to learn about asset optimization: reducing polygon counts, compressing textures, and thinking about the “mobile budget” from the start instead of treating the model as if it were for desktop rendering.
 
+### UI Challenges
+
+Coming from a web and mobile development background (React and Swift), we are used to declarative UI frameworks where state drives the view and layout is handled by flexible systems like Flexbox or Auto Layout.
+
+Unity’s UI system (Canvas, RectTransform, anchors, and the Event System) felt very imperative and manual by comparison. Positioning elements in 3D space or even on a screen-space overlay required a different mental model than the component-based approach we were accustomed to.
+
+We found it challenging to create responsive, modern-looking interfaces that adapted well to different screen sizes without writing a lot of boilerplate code or manually tweaking inspector values. Due to these difficulties and the pressing deadline, we ultimately decided to deprioritize a complex UI and focus on the core AR navigation experience. As a result, the final application has a very minimal interface, relying mostly on the AR visuals themselves to guide the user.
+
 Author: Hugo
