@@ -1,6 +1,6 @@
 # 🚆 AR Train Finder Navigator
 
-This project is an Augmented Reality (AR) navigation system designed to help passengers in Horsens easily find the correct **train platform, exit, or station facility**.  
+This project is an Augmented Reality (AR) navigation system designed to help passengers in Horsens easily find the correct **train platform and route to it**.  
 Instead of reading confusing signs or maps, the passenger can follow a clear **blue AR navigation line** displayed directly in the real world.
 
 The goal of the system is to make train station navigation **simple, intuitive, and accessible** for all passengers, including tourists or people unfamiliar with the station layout.
