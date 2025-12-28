@@ -65,10 +65,15 @@ This project aims to improve the passenger experience by offering:
 ## 📁 Video Demonstration
 
 A video demonstration of the AR navigation system will be added soon.  
-[Watch Demo](#)
+[Watch Demo](blogposts/videoDemo.md)
 
 ## 📝 Development Blogs
-- [Blog 1 – Project Introduction](blogposts/blog1.md)
+- [Blog 1 – Project Idea](blogposts/01_Project_Idea.md)
+- [Blog 2 – Project Learning & Implementation](blogposts/02_Project_Learning+Impl.md)
+- [Blog 3 – Testing, Performance & Delivery](blogposts/03_Testing+Performance+Delivery.md)
+- [Blog 4 – VR Introduction](blogposts/04_VR_Intro.md)
+- [Blog 5 – VR Implementation](blogposts/05_VR_Implementation.md)
+- [Blog 6 – VR UX Improvements](blogposts/06_VR_UX_improvements.md)
 
 ## Tools Used
 - [Unity](https://unity.com/)
