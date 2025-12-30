@@ -64,8 +64,9 @@ This project aims to improve the passenger experience by offering:
 
 ## 📁 Video Demonstration
 
-A video demonstration of the AR navigation system will be added soon.  
-[Watch Demo](blogposts/videoDemo.md)
+A video demonstration of the AR navigation system.  
+[Watch Demo](blogposts/DemoVideoLink.md)
+
 
 ## 📝 Development Blogs
 - [Blog 1 – Project Idea](blogposts/01_Project_Idea.md)
