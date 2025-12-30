@@ -11,7 +11,7 @@ Once the core mechanics of the game were solid, we could spend time focusing on 
 ### Explaining the rules of the game before the game started
 In order to explain the user the rules, we created a Spatial Panel Manipulator, explaining the rules in 3 simple steps, as shown in the image.
 
-<img src="../images/SpatialPanelManipulator.png" alt="Screenshot from Spatial Panel Manipulator from Unity editor"/>
+<img src="images/SpatialPanelManipulator.png" alt="Screenshot from Spatial Panel Manipulator from Unity editor"/>
 
 In here, the user gets welcomed to the game and gets to decide whether to continue with the tutorial or skip directly to the game configuration. To do this, we reused several prefabs from the VR Template tutorial.
 
@@ -25,7 +25,7 @@ As a point of comparison, the "Skip Tutorial" button does not have any feeling o
 ### Setting up the game
 Once the tutorial is completed, or if the user clicked "Skip" in the first card of the Spatial Panel Manipulator, they get presented with the last card of the Spatial Panel Manipulator, in there, the users can add or remove rings from the tower.
 
-<img src="../images/GameSetupCard.png" alt="Screenshot from Spatial Panel Manipulator from Unity editor"/>
+<img src="images/GameSetupCard.png" alt="Screenshot from Spatial Panel Manipulator from Unity editor"/>
 
 These buttons, with appropriate color schemes to accommodate the User's behaviour, caused several issues:
 
@@ -42,7 +42,7 @@ Ideally, before the game begins, we should have been able to disable all the int
 
 Upon completion of the game setup, the user would click on "Continue", which would mark the game as started in the GameManager, the Spatial Panel Manipulator would be disabled, and another panel, GameStatusIndicator would appear, showing the user the current status of the game.
 
-<img src="../images/GameStatusIndicator.png" alt="Game Status indicator"/>
+<img src="images/GameStatusIndicator.png" alt="Game Status indicator"/>
 
 
 ### Measuring game movements
